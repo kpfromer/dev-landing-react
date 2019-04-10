@@ -1,0 +1,23 @@
+.chip {
+  padding: 0 1rem;
+  height: 3rem;
+  font-size: 1.1rem;
+  border-radius: 3rem;
+  color: var(--main-color);
+  background-color: var(--second-color);
+  box-shadow: 0px 0px 0px 3px var(--main-color) inset;
+  transition: color ease-in-out .3s;
+  transition: background-color ease-in-out .3s;
+
+  display: inline-flex;
+  flex: 1;
+}
+
+.chip.clicked {
+  color: var(--second-color);
+  background-color: var(--main-color);
+}
+
+.text {
+  margin: auto;
+}

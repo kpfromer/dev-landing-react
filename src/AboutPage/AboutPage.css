@@ -1,0 +1,25 @@
+.container {
+  height: 100vh;
+}
+
+.content {
+  width: calc(100% - 5.6rem);
+  margin: 0 auto;
+}
+
+@media (min-width: 1025px) {
+  .content {
+    width: calc(100% - 17.5em);
+  }
+}
+
+.header {
+  color: var(--main-color);
+  padding: 1rem 0;
+  font-size: 3rem;
+  font-weight: 900;
+}
+
+p {
+  padding: .5rem 0;
+}
