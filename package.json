@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && del './build/static/**/*.map' && mv build/index.html build/200.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -37,6 +37,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/classnames": "^2.2.7"
+    "@types/classnames": "^2.2.7",
+    "del-cli": "^1.1.0"
   }
 }
