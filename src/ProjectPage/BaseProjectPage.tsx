@@ -1,58 +1,64 @@
 import React, { Component } from 'react';
 import ProjectList from '../Projects/ProjectList';
 import Chip from './Chip';
-import { ProjectType } from '../types';
+
+import styles from './BaseProjectPage.module.css';
+import { inject, observer } from 'mobx-react';
+import { ProjectStore } from '../store/ProjectStore';
+import { TagStore } from '../store/TagStore';
 
 type BaseProjectPageProps = {
-  projects: ProjectType[];
+  projectStore: ProjectStore;
+  tagStore: TagStore;
 }
 
-type BaseProjectPageState = {
-  selectedTag: null | string;
-}
+@observer
+class BaseProjectPage extends Component<BaseProjectPageProps> {
 
-export default class BaseProjectPage extends Component<BaseProjectPageProps, BaseProjectPageState> {
-
-  state: BaseProjectPageState = {
-    selectedTag: null
+  handleTagClick = (tagId: string) => () => {
+    if (this.props.tagStore.selectedTag === tagId) {
+      return this.props.tagStore.changeSelectedTag(null);
+    }
+    this.props.tagStore.changeSelectedTag(tagId);
   }
 
-  handleTagClick = (tagName: string) => () => this.setState(prevState => {
-    if (prevState.selectedTag === tagName) {
-      return { selectedTag: null };
-    }
-    return { selectedTag: tagName };
-  });
-
   render() {
-    const { projects } = this.props;
-    const { selectedTag } = this.state;
+    const { projectStore, tagStore } = this.props;
+    const { selectedTag } = tagStore;
 
-    const tagNames = projects.reduce((prevTags: string[], project) => {
-      const list = [...prevTags];
-      project.tags.forEach(tag => {
-        if (!list.includes(tag)) list.push(tag)
-      });
-      return list;
-    }, []);
+    const projects = projectStore.projectWithDefinitions;
 
-    const filteredProjects = selectedTag === null ? projects : projects.filter(project => project.tags.includes(selectedTag));
+    const filteredProjects = selectedTag === null ?
+      projects
+      :
+      projects.filter(project => project.tags.map(tag => {
+        if (tag === undefined) throw new Error(`Tag in project is not`);
+        return tag.name;
+      }).includes(selectedTag));
 
-    const tags = tagNames.map(tag => 
-      <Chip
-        key={tag}
-        onClick={this.handleTagClick(tag)}
-        clicked={tag === selectedTag}
-      >
-        {tag}
-      </Chip>
-    );
+    const tags = tagStore.tags.map(tag => {
+      return (
+        <Chip
+          key={tag.id}
+          onClick={this.handleTagClick(tag.id)}
+          clicked={tag.id === selectedTag}
+          className={styles.chip}
+          color={tag.color}
+        >
+          {tag.name}
+        </Chip>
+      );
+    });
     
     return (
-      <div>
-        {tags}
-        <ProjectList projects={filteredProjects} />
+      <div className={styles.content}>
+        <div className={styles.chipList}>
+          {tags}
+        </div>
+        <ProjectList />
       </div>
     );
   }
 }
+
+export default inject(store => ({ projectStore: store.projectStore, tagStore: store.tagStore }))(BaseProjectPage);

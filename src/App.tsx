@@ -6,11 +6,10 @@ import './App.css';
 import AboutPage from "./AboutPage/AboutPage";
 import LandingPage from "./LandingPage/LandingPage";
 import BaseProjectPage from './ProjectPage/BaseProjectPage';
-import { SocialIconType, ProjectType } from './types';
+import { SocialIconType, ProjectType, Tag } from './types';
 
 type AppProps = {
-  icons: SocialIconType[];
-  projects: ProjectType[];
+  socialIcons: SocialIconType[];
   taglines: string[];
 }
 
@@ -80,9 +79,9 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Particles params={particlesParams} style={particlesStyle} />
-        <LandingPage icons={this.props.icons} taglines={this.props.taglines}/>
+        <LandingPage icons={this.props.socialIcons} taglines={this.props.taglines}/>
         <AboutPage/>
-        <BaseProjectPage projects={this.props.projects} />
+        <BaseProjectPage />
       </div>
     );
   }

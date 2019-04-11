@@ -1,0 +1,27 @@
+
+/* TODO: extract to master file */
+.content {
+  width: calc(100% - 5.6rem);
+  margin: 0 auto;
+}
+
+@media (min-width: 1025px) {
+  .content {
+    width: calc(100% - 17.5em);
+  }
+}
+
+.chipList {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.chip + .chip {
+  margin-left: 1rem;
+}
+
+/* .chip {
+
+} */
