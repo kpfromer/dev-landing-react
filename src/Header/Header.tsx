@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Typing from 'react-typing-animation';
-import PropTypes from 'prop-types';
 import './Header.css';
 
 type HeaderProps = {
@@ -8,11 +7,6 @@ type HeaderProps = {
 }
 
 export default class Header extends Component<HeaderProps> {
-
-  static propTypes = {
-    taglines: PropTypes.arrayOf(PropTypes.string).isRequired
-  };
-
   shuffle<T>(array: T[]): T[] {
     const newArray = array.slice(0);
     for (let i = newArray.length - 1; i > 0; i--) {
